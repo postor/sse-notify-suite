@@ -1,11 +1,11 @@
 {
   "name": "sse-notify-suite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "bin": {
     "sse-notify-server": "./dist/server.js"
