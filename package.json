@@ -2,7 +2,7 @@
   "name": "sse-notify-suite",
   "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/client.js",
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "jest"
