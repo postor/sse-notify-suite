@@ -1,14 +1,18 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Publisher } from 'sse-notify-suite'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
+const { SSE_SERVER } = publicRuntimeConfig
 
 export default () => {
   const [event, setEvent] = useState('testEvent')
   const [data, setData] = useState('testData')
-  
+  const publisherRef = useRef()
   useEffect(() => {
-    this.publisher = new Publisher(process.env.SSE_SERVER)
+    publisherRef.current = new Publisher(SSE_SERVER)
   }, [])
-  
+
   return (<div>
     <h1>sender</h1>
     <p>
@@ -20,8 +24,7 @@ export default () => {
       <input value={data} onChange={e => setData(e.target.value)} />
     </p>
     <button onClick={() => {
-      this.publisher.publish(event, data)
-      setEvent('')
+      publisherRef.current.publish(event, data)
       setData('')
     }}>send</button>
   </div>)

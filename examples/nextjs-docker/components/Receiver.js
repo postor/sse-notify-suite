@@ -1,43 +1,59 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useReducer } from 'react'
 import { Subscriber } from 'sse-notify-suite'
+import getConfig from 'next/config'
+
+const { publicRuntimeConfig } = getConfig()
+const { SSE_SERVER } = publicRuntimeConfig
 
 
 export default () => {
   const [event, setEvent] = useState('testEvent')
   const [enabled, setEnabled] = useState(true)
-  const [logs, setLogs] = useState([])
+  const [logs, addLog] = useReducer((state, action) => {
+    let n = [action, ...state]
+    if (n.length > 20) n.length = 20
+    return n
+  }, [])
+  const subscriberRef = useRef()
+  const callbackRef = useRef()
 
   useEffect(() => {
-    this.subscriber = new Subscriber(process.env.SSE_SERVER)
+    subscriberRef.current = new Subscriber(SSE_SERVER)
     return () => {
-      this.subscriber.unsubscribe()
+      subscriberRef.current.unsubscribe()
     }
   }, [])
+
 
   return (<div>
     <h1>receiver</h1>
     <p>
       <label>event</label>
-      <input
+      {enabled ? [(<input
+        key={0}
         value={event}
         onChange={e => setEvent(e.target.value)}
-        enabled={enabled}
-      />
-      <button onClick={() => {
-        setEnabled(false)
-        let callback = (data) => setLogs([data, ...logs])
-        this.subscriber.on(event, callback)
-        this.callback = callback
-      }}>listen</button>
-      <button onClick={() => {
-        this.subscriber.off(event, this.callback)
-      }}>stop</button>
+      />), (<button
+        key={1}
+        onClick={() => {
+          setEnabled(false)
+          let callback = (data) => addLog(data)
+          subscriberRef.current.on(event, callback)
+          callbackRef.current = callback
+        }}>listen</button>)
+      ] : [
+          (<span
+            key={0}
+            style={{ border: '1px solid #000' }}>{event}</span>),
+          <button
+            key={1}
+            onClick={() => {
+              subscriberRef.current.off(event, callbackRef.current)
+              setEnabled(true)
+            }}>stop</button>
+        ]}
+
     </p>
-    <p>
-      <ul>
-        <li>logs</li>
-      </ul>
-    </p>
-    <button>send</button>
+    <ul>{logs.map((x, i) => <li key={i}>{x}</li>)}</ul>
   </div>)
 }
