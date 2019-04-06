@@ -52,6 +52,8 @@ PORT=3001 sse-notify-server
 
 ## more | 更多
 
+subscrib | 订阅
+
 ```
 let subscriber = new Subscriber('http://localhost:3000')
 
@@ -70,3 +72,27 @@ subscriber.off()
 subscriber.unsubscribe()
 
 ```
+
+server sse router
+
+```
+import express from 'express'
+import router from 'sse-notify-suite/router'
+
+const app = express()
+
+app.use('/', router)
+```
+
+run code example | 运行代码示例
+
+```
+git clone https://github.com/postor/sse-notify-suite
+cd sse-notify-suite/examples/nextjs-docker
+docker-compose up -d
+```
+
+open http://127.0.0.1:3000
+
+![screenshot](./screenshot.gif)
+
