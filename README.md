@@ -32,7 +32,7 @@ subscriber.on('hello',(data)=>console.log(data))
 //'world'
 ```
 
-or native EventSource
+or native EventSource | 或原生 EventSource
 
 ```
 var es = new EventSource('/stream') 
@@ -47,7 +47,17 @@ es.addEventListener('hello', function (data) {
 ```
 npm i sse-notify-suite -g
 
+# default port 3000
+sse-notify-server
+
+# or specify port through env
 PORT=3001 sse-notify-server
+```
+
+or docker
+
+```
+docker run -p 3000:3000 -it --rm postor/sse-notify-server
 ```
 
 ## more | 更多
@@ -73,7 +83,7 @@ subscriber.unsubscribe()
 
 ```
 
-server sse router
+sse router
 
 ```
 import express from 'express'
