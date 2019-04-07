@@ -18,7 +18,7 @@ publisher.publish('hello', 'world')
 or pure http | 或纯http
 
 ```
-curl -d "event=hello&data=world" -X POST http://localhost:3000/publish
+curl -d "event=hello&data=world" -X POST http://localhost:3000
 ```
 
 ### subscribe | 订阅
