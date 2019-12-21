@@ -1,9 +1,6 @@
 import { useState, useEffect, useRef, useReducer } from 'react'
 import { Subscriber } from 'sse-notify-suite'
-import getConfig from 'next/config'
-
-const { publicRuntimeConfig } = getConfig()
-const { SSE_SERVER } = publicRuntimeConfig
+import { SSE_SERVER } from './config'
 
 
 export default () => {
