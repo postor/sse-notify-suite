@@ -2,6 +2,8 @@
 
 server and client for easy SSE notification | 让SSE通知更容易使用的服务端和客户端API
 
+quick glance: https://www.youtube.com/watch?v=4l_RbZjzBss&list=PLM1v95K5B1ntVsYvNJIxgRPppngrO_X4s&index=12
+
 ## client api | 客户端
 
 ### publish | 发布
